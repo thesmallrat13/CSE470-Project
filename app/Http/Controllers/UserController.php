@@ -38,4 +38,5 @@ class UserController extends Controller
         $user = User::with('researchInterests')->findOrFail($id);
         return view('users.show', compact('user'));
     }
+    
 }
