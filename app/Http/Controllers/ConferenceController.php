@@ -8,7 +8,6 @@ class ConferenceController extends Controller
 {
     public function index()
     {
-        // Static data for now
         $conferences = [
             [
                 'name' => 'CHI',
@@ -21,7 +20,7 @@ class ConferenceController extends Controller
                 'name' => 'CHI',
                 'submission' => 'Poster',
                 'deadline' => '22.01.2026',
-                'date' => '',
+                'date' => '13-17 April 2026',
                 'website' => 'https://chi2026.acm.org/'
             ],
             [
@@ -35,7 +34,7 @@ class ConferenceController extends Controller
                 'name' => 'CSCW',
                 'submission' => 'Short',
                 'deadline' => '13.05.2025',
-                'date' => '',
+                'date' => '13.05.2025',
                 'website' => 'https://cscw.acm.org/2026/'
             ],
             [
@@ -56,7 +55,7 @@ class ConferenceController extends Controller
                 'name' => 'CUI',
                 'submission' => 'Poster',
                 'deadline' => '17.04.25',
-                'date' => '',
+                'date' => '8-10 July 2025',
                 'website' => 'https://cui.acm.org/2025/'
             ],
             [
@@ -70,7 +69,7 @@ class ConferenceController extends Controller
                 'name' => 'SOUPS',
                 'submission' => 'Poster',
                 'deadline' => 'Priority- 24.04.25, Usual- 22.05.25',
-                'date' => '',
+                'date' => '10-12 August 2025',
                 'website' => 'https://www.usenix.org/conference/soups2025'
             ],
             [
@@ -84,7 +83,7 @@ class ConferenceController extends Controller
                 'name' => 'COMPASS',
                 'submission' => 'Short',
                 'deadline' => '1st round- 09.12.24, 2nd round- 05.04.25',
-                'date' => '',
+                'date' => '22-25 July 2025',
                 'website' => 'https://compass.acm.org/'
             ],
             [
@@ -98,7 +97,7 @@ class ConferenceController extends Controller
                 'name' => 'DIS',
                 'submission' => 'Short',
                 'deadline' => '21.03.25',
-                'date' => '',
+                'date' => '5-9 July 2025',
                 'website' => 'https://dis.acm.org/2025/'
             ],
         ];

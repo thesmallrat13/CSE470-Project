@@ -3,11 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\ResearchProgress;
+use Illuminate\Support\Facades\Auth;
 
 class TimelineController extends Controller
 {
     public function index()
     {
-        return view('features.timeline');
+        $progress = ResearchProgress::where('user_id', Auth::id())->get();
+
+        $total = $progress->count();
+        $completed = $progress->where('completed', true)->count();
+        $percentage = $total > 0 ? round(($completed / $total) * 100) : 0;
+
+        return view('research.timeline', compact('progress', 'percentage'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'stage' => 'required|string|max:255',
+        ]);
+
+        ResearchProgress::create([
+            'user_id' => Auth::id(),
+            'stage' => $request->stage,
+            'completed' => false,
+        ]);
+
+        return redirect()->route('research.timeline');
+    }
+
+    public function update($id)
+    {
+        $stage = ResearchProgress::findOrFail($id);
+
+        if ($stage->user_id == Auth::id()) {
+            $stage->completed = !$stage->completed;
+            $stage->save();
+        }
+
+        return redirect()->route('research.timeline');
     }
 }

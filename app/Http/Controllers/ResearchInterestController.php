@@ -2,23 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\ResearchInterest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ResearchInterestController extends Controller
 {
+    // Show form to edit user research interests
     public function edit()
     {
-        $categories = ResearchInterest::whereNull('parent_id')->with('children')->get();
-        $selected = Auth::user()->researchInterests->pluck('id')->toArray();
-        return view('research_interests.edit', compact('categories', 'selected'));
+        // Get all top-level categories with their subcategories
+        $categories = ResearchInterest::whereNull('parent_id')
+            ->with('children')
+            ->get();
+
+        // Get user's selected interests
+        $userInterests = Auth::user()->researchInterests->pluck('id')->toArray();
+
+        return view('research_interests.edit', compact('categories', 'userInterests'));
     }
 
+    // Save selected research interests
     public function update(Request $request)
     {
-        $user = Auth::user();
-        $user->researchInterests()->sync($request->input('interests', []));
-        return redirect()->route('dashboard')->with('success', 'Research interests updated successfully!');
+        $request->validate([
+            'interests' => 'array',
+        ]);
+
+        Auth::user()->researchInterests()->sync($request->input('interests', []));
+
+        return redirect()->route('dashboard')->with('success', 'Research interests updated!');
+    }
+
+    // Browse all research topics
+    public function index()
+    {
+        $categories = ResearchInterest::whereNull('parent_id')
+            ->with('children')
+            ->get();
+
+        return view('research_interests.index', compact('categories'));
     }
 }

@@ -37,7 +37,19 @@ class MentorController extends Controller
         return redirect()->route('dashboard')->with('success', 'You are now listed as a mentor!');
     }
 
-    // List all mentors (for dropdown view)
+    public function getMentorship($mentorId)
+{
+    $mentor = User::findOrFail($mentorId);
+
+    if (!Auth::user()->mentors()->where('mentor_id', $mentor->id)->exists()) {
+        Auth::user()->mentors()->attach($mentor->id);
+    }
+
+    return redirect()->back()->with('success', 'Mentorship added successfully!');
+}
+
+
+    // List all mentors
     public function index()
     {
         $mentors = User::where('is_mentor', true)->get();

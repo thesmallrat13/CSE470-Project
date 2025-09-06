@@ -52,8 +52,15 @@
         </table>
     </div>
 
+    <div class="mt-4 text-center text-muted">
+    <small>
+        All times are in <strong>Anywhere on Earth (AOE)</strong>.  
+        Please visit the official websites for the latest information.
+    </small>
+    </div>
+
     <div class="mt-4 text-center">
-        <a href="{{ route('dashboard') }}" class="btn btn-secondary">⬅ Back to Dashboard</a>
+        <a href="{{ route('dashboard') }}" class="btn btn-secondary">⬅ Back to Home</a>
     </div>
 </div>
 

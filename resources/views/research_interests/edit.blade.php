@@ -1,36 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Research Interests</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
-<div class="container mt-5">
-    <div class="card shadow-lg border-0">
-        <div class="card-header bg-primary text-white">
-            <h4>Select Your Research Interests</h4>
-        </div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('research.update') }}">
-                @csrf
-                @foreach($categories as $category)
-                    <div class="mb-3">
-                        <h5>{{ $category->name }}</h5>
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-4">
+    <h3>Edit Research Interests</h3>
+    <form action="{{ route('research.update') }}" method="POST">
+        @csrf
+
+        @foreach($categories as $category)
+            <div class="mb-3">
+                <h5>{{ $category->name }}</h5>
+
+                @if($category->children->count() > 0)
+                    <ul>
                         @foreach($category->children as $child)
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" 
-                                    name="interests[]" value="{{ $child->id }}" 
-                                    {{ in_array($child->id, $selected) ? 'checked' : '' }}>
-                                <label class="form-check-label">{{ $child->name }}</label>
-                            </div>
+                            <li>
+                                <input type="checkbox" 
+                                       name="interests[]" 
+                                       value="{{ $child->id }}" 
+                                       {{ in_array($child->id, $userInterests) ? 'checked' : '' }}>
+                                {{ $child->name }}
+                            </li>
                         @endforeach
-                    </div>
-                    <hr>
-                @endforeach
-                <button type="submit" class="btn btn-primary w-100">Save Interests</button>
-            </form>
-        </div>
-    </div>
+                    </ul>
+                @else
+                    <p class="text-muted">No subcategories available.</p>
+                @endif
+            </div>
+        @endforeach
+
+        <button type="submit" class="btn btn-primary">Save Interests</button>
+    </form>
 </div>
-</body>
-</html>
+@endsection

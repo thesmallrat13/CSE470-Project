@@ -13,7 +13,7 @@ class UserController extends Controller
         $search = $request->input('search');
         $category = $request->input('category');
 
-        // Get all top-level categories (major subjects)
+        // Top-level categories
         $categories = ResearchInterest::whereNull('parent_id')->get();
 
         $users = User::with('researchInterests')
@@ -23,7 +23,6 @@ class UserController extends Controller
                 });
             })
             ->when($category, function ($query) use ($category) {
-                // Filter users who have research interests whose parent category matches the selected category
                 $query->whereHas('researchInterests.parent', function ($q) use ($category) {
                     $q->where('id', $category);
                 });
@@ -38,5 +37,4 @@ class UserController extends Controller
         $user = User::with('researchInterests')->findOrFail($id);
         return view('users.show', compact('user'));
     }
-    
 }
